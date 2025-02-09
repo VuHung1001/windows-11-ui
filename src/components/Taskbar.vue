@@ -5,19 +5,23 @@
 	export default {
 		name: "Taskbar",
 		computed: {
-			...mapGetters(["allTaskbarItems"]), // Map getter to get products
+			...mapGetters(["getTaskbarItems", "getCurrentFocusItem"]), // Map getter to get products
 			taskbarItems() {
-				return this.allTaskbarItems.taskbarItems as TaskbarItem[]; // Use getter to get products
+				return this.getTaskbarItems.taskbarItems as TaskbarItem[]; // Use getter to get products
+			},
+			currentFocusItem() {
+				return this.getCurrentFocusItem;
 			}
 		},
 		created() {
 			this.fetchTaskbarItems(); // Fetch taskbar items khi component được tạo
 		},		
 		methods: {
-			...mapActions(["fetchTaskbarItems"]),
-			clickTaskbarItem(item) {
+			...mapActions(["fetchTaskbarItems", "changeCurrentFocusItem"]),
+			clickTaskbarItem(item: TaskbarItem) {
 				if (typeof item.isActive === 'boolean') {
-					item.isActive = true
+					item.isActive = true;
+					this.changeCurrentFocusItem(item.name);
 				}
 			}
 		}
@@ -32,7 +36,7 @@
 			v-for="item in taskbarItems" 
 			:key="item.name"
 			class="item"
-			:class="{ active: item.isActive, focus: item.isFocus }"
+			:class="{ active: item.isActive, focus: currentFocusItem === item.name }"
 			@click="clickTaskbarItem(item)"
 		>
 			<img :src="'/' + item.image" :style="item.style" alt="" />
