@@ -1,30 +1,41 @@
-<script setup>
+<script lang="ts">
+	import { mapGetters, mapActions } from "vuex";
+	import TaskbarItem from "@/types/TaskbarItem"
+
+	export default {
+		name: "Taskbar",
+		computed: {
+			...mapGetters(["allTaskbarItems"]), // Map getter to get products
+			taskbarItems() {
+				return this.allTaskbarItems.taskbarItems as TaskbarItem[]; // Use getter to get products
+			}
+		},
+		created() {
+			this.fetchTaskbarItems(); // Fetch taskbar items khi component được tạo
+		},		
+		methods: {
+			...mapActions(["fetchTaskbarItems"]),
+			clickTaskbarItem(item) {
+				if (typeof item.isActive === 'boolean') {
+					item.isActive = true
+				}
+			}
+		}
+	}
 </script>
 
 <template>
   <div class="taskbar-container">
 	<div class="weather-forecast"></div>
 	<div class="taskbar-items">
-		<div class="item focus">
-			<img src="/windows-start.webp" alt="" />
-		</div>
-		<div class="item active">
-			<img src="/file_explorer.png" alt="" style="width: 32px;" />
-		</div>
-		<div class="item">
-			<img src="/chrome.png" alt="" />
-		</div>
-		<div class="item">
-			<img src="/terminal.png" alt="" />
-		</div>
-		<div class="item">
-			<img src="/vscode.png" alt="" />
-		</div>
-		<div class="item">
-			<img src="/postman.png" alt="" />
-		</div>
-		<div class="item">
-			<img src="/youtube.svg" alt="" />
+		<div 
+			v-for="item in taskbarItems" 
+			:key="item.name"
+			class="item"
+			:class="{ active: item.isActive, focus: item.isFocus }"
+			@click="clickTaskbarItem(item)"
+		>
+			<img :src="'/' + item.image" :style="item.style" alt="" />
 		</div>
 	</div>
 	<div class="system-tray-and-time"></div>
@@ -63,10 +74,10 @@
 					left: 50%;
 					transform: translateX(-50%);
 					width: 0;
-					height: 4px;
+					height: 3px;
 					background-color: transparent;
-					border-radius: 2px;
-					transition: all ease 0.2s;
+					border-radius: 3px;
+					transition: all ease 0.4s;
 				}
 
 				&:hover {
@@ -104,22 +115,10 @@
 
 				&:active {
 					img {
-						transform: scale(0.8);
+						transform: scale(0.75);
 					}
 				}
 			}
-		}
-	}
-
-	@keyframes click-taskbar-icon {
-		0% {
-			transform: scale(1);
-		}
-		50% {
-			transform: scale(0.5);
-		}
-		100% {
-			transform: scale(1);
 		}
 	}
 </style>
