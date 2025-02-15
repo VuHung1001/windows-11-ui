@@ -8,25 +8,25 @@
 		},
 		{
 			"name": "File Explorer",
-			"image": "file_explorer.png",
-			"style": "width: 32px;",
+			"image": "file-explorer.svg",
+			"style": "",
 			"isActive": false
 		},
 		{
 			"name": "Chrome",
-			"image": "chrome.png",
+			"image": "chrome.svg",
 			"style": "",
 			"isActive": false
 		},
 		{
 			"name": "Terminal",
-			"image": "terminal.png",
+			"image": "terminal.svg",
 			"style": "",
 			"isActive": false
 		},
 		{
 			"name": "Visual Studio Code",
-			"image": "vscode.png",
+			"image": "vscode.svg",
 			"style": "",
 			"isActive": false
 		},
@@ -41,6 +41,56 @@
 			"image": "youtube.svg",
 			"style": "",
 			"isActive": false
+		}
+	],
+	"pinnedApps": [
+		{
+			"name": "Edge",
+			"image": "edge.svg"
+		},
+		{
+			"name": "Outlook",
+			"image": "outlook.webp"
+		},
+		{
+			"name": "Calendar",
+			"image": "calendar.svg"
+		},
+		{
+			"name": "Microsoft Store",
+			"image": "microsoft-store.svg"
+		},
+		{
+			"name": "Photos",
+			"image": "microsoft-photos.svg"
+		},
+		{
+			"name": "Settings",
+			"image": "settings.svg"
+		},
+		{
+			"name": "Calculator",
+			"image": "calculator.svg"
+		},
+		{
+			"name": "Clock",
+			"image": "clock.webp"
+		},
+		{
+			"name": "Notepad",
+			"image": "notepad.svg"
+		},
+		{
+			"name": "Paint",
+			"image": "paint.svg"
+		},
+		{
+			"name": "File Explorer",
+			"image": "file-explorer.svg"
+		},
+		{
+			"name": "Movies & TV",
+			"image": "movies-tv.svg"
 		}
 	]
 }

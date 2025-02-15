@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Segoe UI';
+  src: url('fonts/Segoe UI.ttf');
+}
+
 * {
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -5,7 +10,7 @@
   padding: 0px;
   margin: 0px;    
 
-  font-family: Roboto, sans-serif;
+  font-family: 'Segoe UI', Roboto, sans-serif;
   font-size: 16px;
   background-color: transparent;
 }
@@ -46,4 +51,9 @@ a:active {
 
 ul {
   list-style-type: none;
+}
+
+input {
+  border: none;
+  outline: none;
 }

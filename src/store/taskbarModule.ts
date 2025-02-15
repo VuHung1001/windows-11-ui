@@ -1,7 +1,13 @@
 import TaskbarItem from "@/types/TaskbarItem";
-import { createStore } from "vuex";
+import { Module } from 'vuex';
 
-const store = createStore({
+interface TaskbarState {
+    taskbarItems: TaskbarItem[],
+    currentFocusItem: string
+}
+
+const taskbarModule: Module<TaskbarState, any> = {
+    namespaced: true,
     state: {
         taskbarItems: [] as TaskbarItem[],
         currentFocusItem: ""
@@ -19,8 +25,8 @@ const store = createStore({
             try {
                 const base_URL = "";
                 const response = await fetch(base_URL + "/data.json");
-                const taskbarItems = await response.json();
-                commit("setTaskbarItems", taskbarItems);
+                const data = await response.json();
+                commit("setTaskbarItems", data.taskbarItems);
             } catch (error) {
                 console.error("Error fetching taskbarItems:", error);
             }
@@ -40,6 +46,6 @@ const store = createStore({
             return state.currentFocusItem;
         }
     },
-});
+}
 
-export default store;
+export default taskbarModule;

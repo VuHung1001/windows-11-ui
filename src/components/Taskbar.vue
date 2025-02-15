@@ -5,9 +5,11 @@
 	export default {
 		name: "Taskbar",
 		computed: {
-			...mapGetters(["getTaskbarItems", "getCurrentFocusItem"]), // Map getter to get products
+			...mapGetters("taskbar", [
+				"getTaskbarItems", "getCurrentFocusItem"
+			]), // Map getter to get taskbar items
 			taskbarItems() {
-				return this.getTaskbarItems.taskbarItems as TaskbarItem[]; // Use getter to get products
+				return this.getTaskbarItems as TaskbarItem[]; // Use getter to get taskbar items
 			},
 			currentFocusItem() {
 				return this.getCurrentFocusItem;
@@ -17,7 +19,9 @@
 			this.fetchTaskbarItems(); // Fetch taskbar items khi component được tạo
 		},		
 		methods: {
-			...mapActions(["fetchTaskbarItems", "changeCurrentFocusItem"]),
+			...mapActions("taskbar", [
+				"fetchTaskbarItems", "changeCurrentFocusItem"
+			]),
 			clickTaskbarItem(item: TaskbarItem) {
 				if (typeof item.isActive === 'boolean') {
 					item.isActive = true;

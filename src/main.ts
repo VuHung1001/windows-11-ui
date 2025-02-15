@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import App from '@/App.vue'
-import taskbarStore from '@/store/taskbarStore';
+import store from '@/store';
 import '@/style.css'
 
 const app = createApp(App);
-app.use(taskbarStore);
+app.use(store);
+// app.use(startMenuStore);
 app.mount('#app');
