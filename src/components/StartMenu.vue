@@ -27,7 +27,7 @@
 		<div class="search">
 			<div class="search-container">
 				<label for="search">
-					<img src="/search.png" width="14" alt="">
+					<img src="/search.png" width="20" alt="">
 				</label>
 				<input type="text" name="search" value="" placeholder="Search for apps, settings, and documents">
 			</div>
@@ -45,7 +45,7 @@
 					class="app"
 					:key="app.name"
 				>
-					<img :src="'/' + app.image" width="32" alt="" />
+					<img :src="'/' + app.image" width="auto" height="auto" alt="" />
 					<span>{{ app.name }}</span>
 				</div>
 			</div>
@@ -81,7 +81,15 @@
 	width: 644px;
 	display: flex;
 	flex-direction: column;
-	border-radius: 20px;
+    border-radius: 8px;
+    background-color: rgba(74, 84, 89, 0.7);
+    backdrop-filter: blur(40px);
+	box-shadow: 0px 0px 1px 1.25px rgba(255, 255, 255, 0.15) inset;
+
+	* {
+		color: white;
+		font-size: 12px;
+	}
 
 	.search {
 		padding: 32px;
@@ -93,10 +101,21 @@
 			width: 100%;
 			height: 30px;
 			border-radius: 15px;
+			box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.35);
+			background-color: rgb(40, 40, 40);
+
+			label {
+				width: 42px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 
 			input {
+				font-size: 14px;
 				border: none;
 				height: 100%;
+				flex: 1;
 			}
 		}
 	}
@@ -117,7 +136,28 @@
 				flex-direction: column;
 				align-items: center;
 				gap: 8px;
-				padding: 12px 0 24px;
+				padding: 12px 0 18px;
+				border-radius: 5px;
+				transition: all ease 0.15s;
+
+				img {
+					min-width: 32px;
+					max-width: 32px;
+					max-height: 32px;
+					min-height: 32px;
+					object-fit: contain;
+					transition: all ease 0.15s;
+				}
+
+				&:hover {
+					background-color: rgba(255, 255, 255, 0.075);
+				}
+
+				&:active {
+					img {
+						transform: scale(0.75);
+					}
+				}
 			}
 		}
 	}
@@ -126,33 +166,62 @@
 		display: flex;
 		flex-direction: column;
 		row-gap: 12px;
-		padding: 18px 52px 32px;
+		padding: 18px 32px 32px;
 	}
-
-	.more-btn {
-		display: flex;
-		gap: 12px;
-		height: 24px;
-		padding: 6px;
-		border-radius: 6px;
-	}	
 
 	.label-container {
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
-		padding: 0 64px;
+		align-items: center;
+		padding: 0 32px;
+
+		& > span {
+			font-weight: 500;
+			font-size: 14px;
+		}
+
+		.more-btn {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			height: 24px;
+			padding: 8px;
+			border-radius: 5px;
+			background-color: rgba(255, 255, 255, 0.075);
+			box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.1) inset;
+			transition: all ease 0.15s;
+
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+				box-shadow: none;
+			}
+
+			&:active {
+				background-color: transparent;
+				box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.1) inset;
+			}
+		}	
 	}	
 
 	.account {
 		display: flex;
 		justify-content: space-between;
 		padding: 12px 52px;
+		background-color: rgb(45, 51, 54, 0.3);
+		border-radius: 0 0 8px 8px;
 
 		& > div {
 			height: 40px;
 			display: flex;
-			align-items: center;			
+			align-items: center;		
+			justify-content: center;	
+			border-radius: 5px;
+			transition: all ease 0.15s;
+
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
 		}
 
 		.user {
@@ -168,6 +237,10 @@
 
 		.power {
 			width: 40px;
+
+			img {
+				filter: invert(1);
+			}
 		}
 	}
 }

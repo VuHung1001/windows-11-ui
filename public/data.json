@@ -50,11 +50,11 @@
 		},
 		{
 			"name": "Outlook",
-			"image": "outlook.webp"
+			"image": "outlook.svg"
 		},
 		{
 			"name": "Calendar",
-			"image": "calendar.svg"
+			"image": "calendar.webp"
 		},
 		{
 			"name": "Microsoft Store",
