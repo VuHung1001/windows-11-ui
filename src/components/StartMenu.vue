@@ -5,18 +5,24 @@
 		name: "StartMenu",
 		computed: {
 			...mapGetters("startMenu", [
-				"getPinnedApps"
-			]), // Map getter to get pinned apps
+				"getPinnedApps",
+				"getRecommendedFiles"
+			]),
 			pinnedApps() {
-				return this.getPinnedApps; // Use getter to get pinned apps
-			},			
+				return this.getPinnedApps;
+			},	
+			recommendedFiles() {
+				return this.getRecommendedFiles;
+			}		
 		},
 		created() {
-			this.fetchPinnedApps(); // Fetch pinned apps khi component được tạo
+			this.fetchPinnedApps();
+			this.fetchRecommendedFiles();
 		},		
 		methods: {
 			...mapActions("startMenu", [
-				"fetchPinnedApps"
+				"fetchPinnedApps",
+				"fetchRecommendedFiles"
 			]),
 		}
 	}
@@ -27,7 +33,7 @@
 		<div class="search">
 			<div class="search-container">
 				<label for="search">
-					<img src="/search.png" width="20" alt="">
+					<img src="/images/search.png" width="20" alt="">
 				</label>
 				<input type="text" name="search" value="" placeholder="Search for apps, settings, and documents">
 			</div>
@@ -45,7 +51,7 @@
 					class="app"
 					:key="app.name"
 				>
-					<img :src="'/' + app.image" width="auto" height="auto" alt="" />
+					<img :src="'/images/' + app.image" width="auto" height="auto" alt="" />
 					<span>{{ app.name }}</span>
 				</div>
 			</div>
@@ -58,15 +64,26 @@
 					<span>></span>
 				</button>			
 			</div>
-			<div class="files"></div>
+			<div class="files-and-links">
+				<div v-for="item in recommendedFiles"
+					class="item"
+					:key="item.name"
+				>
+					<img :src="'/images/' + item.image" width="auto" height="auto" alt="" />
+					<div class="name-and-description">
+						<span>{{ item.name }}</span>
+						<p>{{ item.description }}</p>
+					</div>
+				</div>				
+			</div>
 		</div>
 		<div class="account">
 			<div class="user">
-				<img src="/dev.png" alt="">
+				<img src="/images/dev.png" alt="">
 				<span>Hùng Vũ</span>
 			</div>
 			<div class="power">
-				<img src="/power.svg" width="16" alt="">
+				<img src="/images/power.svg" width="16" alt="">
 			</div>
 		</div>
 	</div>
@@ -78,7 +95,7 @@
 	bottom: 60px;
 	left: 50%;
 	transform: translateX(-50%);
-	width: 644px;
+	width: 640px;
 	display: flex;
 	flex-direction: column;
     border-radius: 8px;
@@ -89,6 +106,7 @@
 	* {
 		color: white;
 		font-size: 12px;
+		cursor: default;
 	}
 
 	.search {
@@ -103,6 +121,10 @@
 			border-radius: 15px;
 			box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.35);
 			background-color: rgb(40, 40, 40);
+
+			* {
+				cursor: text;
+			}
 
 			label {
 				width: 42px;
@@ -145,7 +167,6 @@
 					max-width: 32px;
 					max-height: 32px;
 					min-height: 32px;
-					object-fit: contain;
 					transition: all ease 0.15s;
 				}
 
@@ -167,6 +188,55 @@
 		flex-direction: column;
 		row-gap: 12px;
 		padding: 18px 32px 32px;
+
+		.files-and-links {
+			display: flex;
+			flex-wrap: wrap;
+			column-gap: 24px;
+			padding-left: 20px;
+
+			.item {
+				width: calc(50% - 12px);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				padding: 12px;
+				border-radius: 5px;
+				transition: all ease 0.15s;
+
+				&:hover {
+					background-color: rgba(255, 255, 255, 0.075);
+				}
+
+				&:active {
+					background-color: rgba(255, 255, 255, 0.04);
+				}
+
+				img {
+					min-width: 32px;
+					max-width: 32px;
+					min-height: 32px;
+					max-height: 32px;
+				}
+
+				.name-and-description {
+					width: calc(100% - 32px - 12px);
+					display: flex;
+					flex-direction: column;
+					gap: 2px;
+
+					span {
+						overflow:hidden; 
+						white-space:nowrap; 
+						text-overflow: ellipsis;
+					}
+
+					p {
+						font-weight: 300;
+					}
+				}
+			}
+		}
 	}
 
 	.label-container {
@@ -220,8 +290,20 @@
 			transition: all ease 0.15s;
 
 			&:hover {
-				background-color: rgba(255, 255, 255, 0.1);
+				background-color: rgba(255, 255, 255, 0.075);
 			}
+
+			&:active {
+				background-color: rgba(255, 255, 255, 0.04);
+
+				span {
+					color: rgba(255, 255, 255, 0.8);
+				}
+
+				img {
+					filter: invert(0.8);
+				}				
+			}			
 		}
 
 		.user {
@@ -233,6 +315,10 @@
 				width: 30px;
 				border-radius: 50%;
 			}
+
+			span {
+				transition: all ease 0.15s;
+			}
 		}
 
 		.power {
@@ -240,6 +326,7 @@
 
 			img {
 				filter: invert(1);
+				transition: all ease 0.15s;
 			}
 		}
 	}

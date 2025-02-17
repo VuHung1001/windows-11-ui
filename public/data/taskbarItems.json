@@ -1,0 +1,46 @@
+{
+	"taskbarItems": [
+		{
+			"name": "Start",
+			"image": "windows-start.webp",
+			"style": "",
+			"isActive": null
+		},
+		{
+			"name": "File Explorer",
+			"image": "file-explorer.svg",
+			"style": "",
+			"isActive": false
+		},
+		{
+			"name": "Chrome",
+			"image": "chrome.svg",
+			"style": "",
+			"isActive": false
+		},
+		{
+			"name": "Terminal",
+			"image": "terminal.svg",
+			"style": "",
+			"isActive": false
+		},
+		{
+			"name": "Visual Studio Code",
+			"image": "vscode.svg",
+			"style": "",
+			"isActive": false
+		},
+		{
+			"name": "Postman",
+			"image": "postman.png",
+			"style": "",
+			"isActive": false
+		},
+		{
+			"name": "YouTube",
+			"image": "youtube.svg",
+			"style": "",
+			"isActive": false
+		}
+	]
+}

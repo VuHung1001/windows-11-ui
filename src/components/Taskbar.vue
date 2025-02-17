@@ -7,16 +7,16 @@
 		computed: {
 			...mapGetters("taskbar", [
 				"getTaskbarItems", "getCurrentFocusItem"
-			]), // Map getter to get taskbar items
+			]),
 			taskbarItems() {
-				return this.getTaskbarItems as TaskbarItem[]; // Use getter to get taskbar items
+				return this.getTaskbarItems as TaskbarItem[];
 			},
 			currentFocusItem() {
 				return this.getCurrentFocusItem;
 			}
 		},
 		created() {
-			this.fetchTaskbarItems(); // Fetch taskbar items khi component được tạo
+			this.fetchTaskbarItems();
 		},		
 		methods: {
 			...mapActions("taskbar", [
@@ -43,7 +43,7 @@
 			:class="{ active: item.isActive, focus: currentFocusItem === item.name }"
 			@click="clickTaskbarItem(item)"
 		>
-			<img :src="'/' + item.image" :style="item.style" alt="" />
+			<img :src="'/images/' + item.image" :style="item.style" alt="" />
 		</div>
 	</div>
 	<div class="system-tray-and-time"></div>

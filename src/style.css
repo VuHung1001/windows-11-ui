@@ -48,7 +48,7 @@ body {
 #app {
   height: 100%;
   width: 100%;
-  background-image: url('./window-background.jpeg');
+  background-image: url('images/window-background.jpeg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -77,4 +77,8 @@ ul {
 input {
   border: none;
   outline: none;
+}
+
+img {
+  object-fit: contain;
 }

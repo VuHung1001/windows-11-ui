@@ -24,7 +24,7 @@ const taskbarModule: Module<TaskbarState, any> = {
         async fetchTaskbarItems({ commit }) {
             try {
                 const base_URL = "";
-                const response = await fetch(base_URL + "/data.json");
+                const response = await fetch(base_URL + "/data/taskbarItems.json");
                 const data = await response.json();
                 commit("setTaskbarItems", data.taskbarItems);
             } catch (error) {

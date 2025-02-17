@@ -1,0 +1,35 @@
+{
+	"recommendedFiles": [
+		{
+			"name": "Facebook Profile",
+			"image": "facebook.svg",
+			"description": "My facebook infor",
+			"link": "fb.com/RuoiVaRua"
+		},			
+		{
+			"name": "about-me.md",
+			"image": "markdown.svg",
+			"description": "A few things about me"
+		},	
+		{
+			"name": "CV Vũ Phi Hùng - Frontend Developer.pdf",
+			"image": "pdf.png",
+			"description": "My CV in pdf format"
+		},
+		{
+			"name": "CV Vũ Phi Hùng - Frontend Developer.docx",
+			"image": "docx.svg",
+			"description": "My CV in docx format"
+		},
+		{
+			"name": "CV Vũ Phi Hùng - English.pdf",
+			"image": "pdf.png",
+			"description": "My english CV in pdf format"
+		},
+		{
+			"name": "CV Vũ Phi Hùng - English.docx",
+			"image": "docx.svg",
+			"description": "My english CV in docx format"
+		}
+	]
+}
