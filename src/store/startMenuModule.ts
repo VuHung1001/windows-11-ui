@@ -3,14 +3,16 @@ import { Module } from 'vuex';
 
 interface StartMenuState {
 	pinnedApps: PinnedApps[],
-    recommendedFiles: RecommendedFiles[]
+    recommendedFiles: RecommendedFiles[],
+    isOpen: boolean
 }
 
 const startMenuModule: Module<StartMenuState, any> = {
 	namespaced: true,
     state: {
         pinnedApps: [] as PinnedApps[],
-        recommendedFiles: [] as RecommendedFiles[]
+        recommendedFiles: [] as RecommendedFiles[],
+        isOpen: false
     },
     mutations: {
         setPinnedApps(state, pinnedApps) {
@@ -19,6 +21,9 @@ const startMenuModule: Module<StartMenuState, any> = {
         setRecommendedFiles(state, recommendedFiles) {
             state.recommendedFiles = recommendedFiles;
         },
+        setOpeningState(state) {
+            state.isOpen = !state.isOpen;
+        }
     },
     actions: {
         async fetchPinnedApps({ commit }) {
@@ -41,6 +46,9 @@ const startMenuModule: Module<StartMenuState, any> = {
                 console.error("Error fetching recommendedFiles:", error);
             }
         },
+        toggleOpening({ commit }) {
+            commit("setOpeningState");
+        }
     },
     getters: {
         getPinnedApps: (state) => {
@@ -55,6 +63,9 @@ const startMenuModule: Module<StartMenuState, any> = {
         getRecommendedFileByName: (state) => (name: string) => {
             return state.recommendedFiles.find(app => app.name === name);
         },
+        getOpeningState: (state) => {
+            return state.isOpen;
+        }
     },
 };
 

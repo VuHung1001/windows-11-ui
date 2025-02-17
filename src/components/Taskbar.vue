@@ -22,10 +22,15 @@
 			...mapActions("taskbar", [
 				"fetchTaskbarItems", "changeCurrentFocusItem"
 			]),
+			...mapActions("startMenu", [
+				"toggleOpening"
+			]),
 			clickTaskbarItem(item: TaskbarItem) {
 				if (typeof item.isActive === 'boolean') {
 					item.isActive = true;
 					this.changeCurrentFocusItem(item.name);
+				} else if (item.isActive === null && item.name === 'Start') {
+					this.toggleOpening();
 				}
 			}
 		}

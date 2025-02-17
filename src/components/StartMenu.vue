@@ -6,14 +6,18 @@
 		computed: {
 			...mapGetters("startMenu", [
 				"getPinnedApps",
-				"getRecommendedFiles"
+				"getRecommendedFiles",
+				"getOpeningState"
 			]),
 			pinnedApps() {
 				return this.getPinnedApps;
 			},	
 			recommendedFiles() {
 				return this.getRecommendedFiles;
-			}		
+			},
+			isOpen() {
+				return this.getOpeningState;
+			}
 		},
 		created() {
 			this.fetchPinnedApps();
@@ -22,14 +26,14 @@
 		methods: {
 			...mapActions("startMenu", [
 				"fetchPinnedApps",
-				"fetchRecommendedFiles"
+				"fetchRecommendedFiles",
 			]),
 		}
 	}
 </script>
 
 <template>
-	<div class="start-menu-container">
+	<div class="start-menu-container" :class="isOpen ? 'open' : 'close'">
 		<div class="search">
 			<div class="search-container">
 				<label for="search">
@@ -102,6 +106,66 @@
     background-color: rgba(74, 84, 89, 0.7);
     backdrop-filter: blur(40px);
 	box-shadow: 0px 0px 1px 1.25px rgba(255, 255, 255, 0.15) inset;
+
+	&.open {
+		animation: show_up ease 0.3s;
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);		
+
+		* {
+			animation: show ease 0.3s;
+		}
+	}
+
+	&.close {
+		animation: hide_down ease 0.3s;
+		opacity: 0;
+		transform: translateX(-50%) translateY(calc(100% + 60px));		
+		
+		* {
+			animation: hide ease 0.3s;
+		}
+	}
+
+	@keyframes show_up {
+		0% {
+			opacity: 0;
+			transform: translateX(-50%) translateY(calc(100% + 60px));	
+		}
+		100% {
+			opacity: 1;
+			transform: translateX(-50%) translateY(0);				
+		}
+	}
+
+	@keyframes hide_down {
+		0% {
+			opacity: 1;
+			transform: translateX(-50%) translateY(0);				
+		}
+		100% {
+			opacity: 0;
+			transform: translateX(-50%) translateY(calc(100% + 60px));				
+		}
+	}
+
+	@keyframes show {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes hide {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
 
 	* {
 		color: white;
@@ -299,10 +363,6 @@
 				span {
 					color: rgba(255, 255, 255, 0.8);
 				}
-
-				img {
-					filter: invert(0.8);
-				}				
 			}			
 		}
 
@@ -327,6 +387,12 @@
 			img {
 				filter: invert(1);
 				transition: all ease 0.15s;
+			}
+
+			&:active {
+				img {
+					filter: invert(0.8);
+				}				
 			}
 		}
 	}
