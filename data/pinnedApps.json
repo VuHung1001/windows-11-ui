@@ -1,0 +1,52 @@
+{
+	"pinnedApps": [
+		{
+			"name": "Edge",
+			"image": "edge.svg"
+		},
+		{
+			"name": "Outlook",
+			"image": "outlook.svg"
+		},
+		{
+			"name": "Calendar",
+			"image": "calendar.webp"
+		},
+		{
+			"name": "Microsoft Store",
+			"image": "microsoft-store.svg"
+		},
+		{
+			"name": "Photos",
+			"image": "microsoft-photos.svg"
+		},
+		{
+			"name": "Settings",
+			"image": "settings.svg"
+		},
+		{
+			"name": "Calculator",
+			"image": "calculator.svg"
+		},
+		{
+			"name": "Clock",
+			"image": "clock.webp"
+		},
+		{
+			"name": "Notepad",
+			"image": "notepad.svg"
+		},
+		{
+			"name": "Paint",
+			"image": "paint.svg"
+		},
+		{
+			"name": "File Explorer",
+			"image": "file-explorer.svg"
+		},
+		{
+			"name": "Movies & TV",
+			"image": "movies-tv.svg"
+		}
+	]
+}
