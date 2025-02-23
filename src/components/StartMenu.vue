@@ -381,12 +381,16 @@
 
 			&:hover {
 				background-color: rgba(255, 255, 255, 0.1);
-				box-shadow: none;
+				box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.1) inset;
 			}
 
 			&:active {
-				background-color: transparent;
+				background-color: rgba(255, 255, 255, 0.04);
 				box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.1) inset;
+
+				span {
+					color: rgba(255, 255, 255, 0.8);
+				}
 			}
 		}	
 	}	

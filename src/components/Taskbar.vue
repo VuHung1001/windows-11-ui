@@ -1,9 +1,16 @@
 <script lang="ts">
 	import { mapGetters, mapActions } from "vuex";
 	import TaskbarItem from "@/types/TaskbarItem"
+	import { formatAMPM, formatWindowsDate } from "@/utils/datetime";
 
 	export default {
 		name: "Taskbar",
+		data() {
+			return {
+				currentTime: formatAMPM(),
+				currentDate: formatWindowsDate()
+			}
+		},
 		computed: {
 			...mapGetters("taskbar", [
 				"getTaskbarItems", "getCurrentFocusItem"
@@ -13,10 +20,14 @@
 			},
 			currentFocusItem() {
 				return this.getCurrentFocusItem;
-			}
+			},
 		},
 		created() {
 			this.fetchTaskbarItems();
+			setInterval(() => {
+				this.currentTime = formatAMPM();
+				this.currentDate = formatWindowsDate();
+			}, 1000);
 		},		
 		methods: {
 			...mapActions("taskbar", [
@@ -51,7 +62,12 @@
 			<img :src="'/images/' + item.image" :style="item.style" alt="" />
 		</div>
 	</div>
-	<div class="system-tray-and-time"></div>
+	<div class="system-tray-and-calendar">
+		<div class="calendar">
+			<span class="time">{{ currentTime }}</span>
+			<span class="date">{{ currentDate }}</span>
+		</div>
+	</div>
   </div>
 </template>
 
@@ -61,16 +77,19 @@
 		bottom: 0;
 		width: 100vw;
 		height: 48px;
-		padding: 3px 16px;
+		padding: 3px 12px;
 		display: flex;
 		justify-content: space-between;
-		background-color: rgba(0, 0, 0, 0.22);
+		background-color: rgba(0, 0, 0, 0.4);
 		backdrop-filter: blur(20px);
 		z-index: 1;
 
 		.taskbar-items {
 			display: flex;
 			gap: 7px;
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);			
 
 			.item {
 				height: 42px;
@@ -111,7 +130,7 @@
 
 					&:hover {
 						background-color: rgba(255, 255, 255, 0.15);
-						box-shadow: none;
+						box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.15) inset;
 					}
 
 					&::before {
@@ -131,6 +150,38 @@
 					img {
 						transform: scale(0.75);
 					}
+				}
+			}
+		}
+
+		.system-tray-and-calendar {
+			.calendar {
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				justify-content: center;
+				gap: 4px;
+				padding: 0 8px;
+				border-radius: 4px;
+
+				&:hover {
+					background-color: rgba(255, 255, 255, 0.1);
+					box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.1) inset;
+				}
+
+				&:active {
+					background-color: rgba(255, 255, 255, 0.04);
+					box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.1) inset;
+
+					span {
+						color: rgba(255, 255, 255, 0.8);					
+					}
+				}
+
+				span {
+					color: white;
+					font-size: 12px;
 				}
 			}
 		}
