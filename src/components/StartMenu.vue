@@ -7,7 +7,8 @@
 			...mapGetters("startMenu", [
 				"getPinnedApps",
 				"getRecommendedFiles",
-				"getOpeningState"
+				"getOpeningState",
+				"getPowerPopupOpeningState"
 			]),
 			pinnedApps() {
 				return this.getPinnedApps;
@@ -17,6 +18,9 @@
 			},
 			isOpen() {
 				return this.getOpeningState;
+			},
+			isPowerPopupOpen() {
+				return this.getPowerPopupOpeningState;
 			}
 		},
 		created() {
@@ -27,17 +31,32 @@
 			...mapActions("startMenu", [
 				"fetchPinnedApps",
 				"fetchRecommendedFiles",
+				"togglePowerPopupOpening"
 			]),
+			getStartMenuContainerClass(): string {
+				if (typeof this.isOpen === 'boolean') {
+					return this.isOpen ? 'opening' : 'closed';
+				} else {
+					return '';
+				}
+			},
+			getPowerPopupClass(): string {
+				if (typeof this.isPowerPopupOpen === 'boolean') {
+					return this.isPowerPopupOpen ? 'opening' : 'closed';
+				} else {
+					return '';
+				}
+			}
 		}
 	}
 </script>
 
 <template>
-	<div class="start-menu-container" :class="isOpen ? 'open' : 'close'">
+	<div class="start-menu-container" :class="getStartMenuContainerClass()">
 		<div class="search">
 			<div class="search-container">
 				<label for="search">
-					<img src="/images/search.png" width="20" alt="">
+					<img src="/images/icons/search.png" width="20" alt="">
 				</label>
 				<input type="text" name="search" value="" placeholder="Search for apps, settings, and documents">
 			</div>
@@ -86,8 +105,26 @@
 				<img src="/images/dev.png" alt="">
 				<span>Hùng Vũ</span>
 			</div>
-			<div class="power">
-				<img src="/images/power.svg" width="16" alt="">
+			<div class="power" @mouseup="togglePowerPopupOpening()">
+				<img src="/images/icons/power.svg" width="18" alt="">
+				<div class="power-popup" :class="getPowerPopupClass()">
+					<div class="lock">
+						<img src="/images/icons/lock.svg" width="16" alt="">
+						<span>Lock</span>
+					</div>
+					<div class="sleep">
+						<img src="/images/icons/sleep.svg" width="16" alt="">
+						<span>Sleep</span>						
+					</div>
+					<div class="shutdown">
+						<img src="/images/icons/power.svg" width="18" alt="">
+						<span>Shut down</span>						
+					</div>
+					<div class="restart">
+						<img src="/images/icons/restart.svg" width="18" alt="">
+						<span>Restart</span>					
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -98,16 +135,20 @@
 	position: fixed;
 	bottom: 60px;
 	left: 50%;
-	transform: translateX(-50%);
 	width: 640px;
 	display: flex;
 	flex-direction: column;
     border-radius: 8px;
     background-color: rgba(74, 84, 89, 0.7);
     backdrop-filter: blur(40px);
-	box-shadow: 0px 0px 1px 1.25px rgba(255, 255, 255, 0.15) inset;
+	// box-shadow: 0px 0px 1px 1.25px rgba(255, 255, 255, 0.15) inset;
+	box-shadow: 0px 6px 10px 2px rgba(0,0,0,0.3);
+	border: 1px solid rgba(255, 255, 255, 0.15);
 
-	&.open {
+	opacity: 0;
+	transform: translateX(-50%) translateY(calc(100% + 60px));
+
+	&.opening {
 		animation: show_up ease 0.3s;
 		opacity: 1;
 		transform: translateX(-50%) translateY(0);		
@@ -117,7 +158,7 @@
 		}
 	}
 
-	&.close {
+	&.closed {
 		animation: hide_down ease 0.3s;
 		opacity: 0;
 		transform: translateX(-50%) translateY(calc(100% + 60px));		
@@ -225,6 +266,10 @@
 				padding: 12px 0 18px;
 				border-radius: 5px;
 				transition: all ease 0.15s;
+				cursor: help;
+				* {
+					cursor: help;
+				}				
 
 				img {
 					min-width: 32px;
@@ -325,6 +370,10 @@
 			background-color: rgba(255, 255, 255, 0.075);
 			box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.1) inset;
 			transition: all ease 0.15s;
+			cursor: help;
+			* {
+				cursor: help;
+			}
 
 			&:hover {
 				background-color: rgba(255, 255, 255, 0.1);
@@ -353,7 +402,7 @@
 			border-radius: 5px;
 			transition: all ease 0.15s;
 
-			&:hover {
+			&:not(.power:has(.opening)):hover {
 				background-color: rgba(255, 255, 255, 0.075);
 			}
 
@@ -369,6 +418,10 @@
 		.user {
 			gap: 12px;
 			padding: 5px 12px;
+			cursor: help;
+			* {
+				cursor: help;
+			}			
 
 			img {
 				height: 30px;
@@ -383,6 +436,7 @@
 
 		.power {
 			width: 40px;
+			position: relative;
 
 			img {
 				filter: invert(1);
@@ -393,6 +447,96 @@
 				img {
 					filter: invert(0.8);
 				}				
+			}
+
+			.power-popup {
+				position: absolute;
+				bottom: -100%;
+				visibility: hidden;
+				opacity: 0;
+				width: 128px;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 4px;
+				padding: 5px;
+				border-radius: 8px;
+				background-color: rgb(44, 48, 49);
+
+				&.opening {
+					animation: show_power_popup ease 0.5s;
+					bottom: calc(100% + 4px);		
+					visibility: visible;
+					opacity: 1;
+					box-shadow: 0px 6px 10px 2px rgba(0,0,0,0.3);
+				}
+
+				&.closed {
+					animation: hide_power_popup ease 0.1s;
+					bottom: -100%;	
+					visibility: hidden;
+					opacity: 0;
+					box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.3);	
+				}				
+
+				@keyframes show_power_popup {
+					0% {
+						bottom: -100%;	
+						visibility: hidden;
+						opacity: 0;
+						box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.3);	
+					}
+					60% {
+						bottom: calc(100% + 4px);	
+						visibility: visible;
+						opacity: 1;
+						box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.3);							
+					}
+					100% {
+						bottom: calc(100% + 4px);
+						visibility: visible;	
+						opacity: 1;
+						box-shadow: 0px 6px 10px 2px rgba(0,0,0,0.3);				
+					}
+				}
+
+				@keyframes hide_power_popup {
+					0% {
+						bottom: calc(100% + 4px);	
+						visibility: visible;	
+						opacity: 1;
+						box-shadow: 0px 6px 10px 2px rgba(0,0,0,0.3);		
+					}
+					100% {
+						bottom: -100%;	
+						visibility: hidden;
+						opacity: 0;
+						box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.3);			
+					}
+				}				
+
+				& > div {
+					width: 100%;
+					display: flex;
+					align-items: center;
+					gap: 12px;
+					padding: 5px 10px;
+					border-radius: 3px;
+
+					&:hover {
+						background-color: rgb(55, 59, 61);
+					}
+
+					img {
+						min-width: 16px;
+						min-height: 16px;
+						filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(337deg) brightness(105%) contrast(102%);
+					}
+
+					span {
+						font-size: 14px;
+					}
+				}
 			}
 		}
 	}

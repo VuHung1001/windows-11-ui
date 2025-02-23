@@ -4,7 +4,8 @@ import { Module } from 'vuex';
 interface StartMenuState {
 	pinnedApps: PinnedApps[],
     recommendedFiles: RecommendedFiles[],
-    isOpen: boolean
+    isOpen: boolean | null,
+    isPowerPopupOpen: boolean | null
 }
 
 const startMenuModule: Module<StartMenuState, any> = {
@@ -12,7 +13,8 @@ const startMenuModule: Module<StartMenuState, any> = {
     state: {
         pinnedApps: [] as PinnedApps[],
         recommendedFiles: [] as RecommendedFiles[],
-        isOpen: false
+        isOpen: null,
+        isPowerPopupOpen: null
     },
     mutations: {
         setPinnedApps(state, pinnedApps) {
@@ -23,6 +25,9 @@ const startMenuModule: Module<StartMenuState, any> = {
         },
         setOpeningState(state) {
             state.isOpen = !state.isOpen;
+        },
+        setPowerPopupOpeningState(state) {
+            state.isPowerPopupOpen = !state.isPowerPopupOpen;
         }
     },
     actions: {
@@ -48,6 +53,9 @@ const startMenuModule: Module<StartMenuState, any> = {
         },
         toggleOpening({ commit }) {
             commit("setOpeningState");
+        },
+        togglePowerPopupOpening({ commit }) {
+            commit("setPowerPopupOpeningState");
         }
     },
     getters: {
@@ -65,6 +73,9 @@ const startMenuModule: Module<StartMenuState, any> = {
         },
         getOpeningState: (state) => {
             return state.isOpen;
+        },
+        getPowerPopupOpeningState: (state) => {
+            return state.isPowerPopupOpen;
         }
     },
 };

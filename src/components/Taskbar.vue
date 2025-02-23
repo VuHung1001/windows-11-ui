@@ -9,7 +9,7 @@
 				"getTaskbarItems", "getCurrentFocusItem"
 			]),
 			taskbarItems() {
-				return this.getTaskbarItems as TaskbarItem[];
+				return this.getTaskbarItems;
 			},
 			currentFocusItem() {
 				return this.getCurrentFocusItem;
@@ -46,7 +46,7 @@
 			:key="item.name"
 			class="item"
 			:class="{ active: item.isActive, focus: currentFocusItem === item.name }"
-			@click="clickTaskbarItem(item)"
+			@mouseup="clickTaskbarItem(item)"
 		>
 			<img :src="'/images/' + item.image" :style="item.style" alt="" />
 		</div>
@@ -66,6 +66,7 @@
 		justify-content: space-between;
 		background-color: rgba(0, 0, 0, 0.22);
 		backdrop-filter: blur(20px);
+		z-index: 1;
 
 		.taskbar-items {
 			display: flex;
@@ -123,7 +124,7 @@
 					width: 26px;
 					display: block;
 					padding-bottom: 2px;
-					transition: all ease 0.15s;
+					transition: all ease 0.1s;
 				}
 
 				&:active {
