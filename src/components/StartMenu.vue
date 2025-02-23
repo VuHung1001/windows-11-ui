@@ -46,6 +46,10 @@
 				} else {
 					return '';
 				}
+			},
+			closeThisTab() {
+				const acceptClose = window.confirm("Close this tab !?");
+				acceptClose && window.close();
 			}
 		}
 	}
@@ -108,19 +112,19 @@
 			<div class="power" @mouseup="togglePowerPopupOpening()">
 				<img src="/images/icons/power.svg" width="18" alt="">
 				<div class="power-popup" :class="getPowerPopupClass()">
-					<div class="lock">
+					<div class="lock" @mouseup="closeThisTab()">
 						<img src="/images/icons/lock.svg" width="16" alt="">
 						<span>Lock</span>
 					</div>
-					<div class="sleep">
+					<div class="sleep" @mouseup="closeThisTab()">
 						<img src="/images/icons/sleep.svg" width="16" alt="">
 						<span>Sleep</span>						
 					</div>
-					<div class="shutdown">
+					<div class="shutdown" @mouseup="closeThisTab()">
 						<img src="/images/icons/power.svg" width="18" alt="">
 						<span>Shut down</span>						
 					</div>
-					<div class="restart">
+					<div class="restart" @mouseup="closeThisTab()">
 						<img src="/images/icons/restart.svg" width="18" alt="">
 						<span>Restart</span>					
 					</div>
