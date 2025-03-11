@@ -37,6 +37,12 @@
 			"isActive": false
 		},
 		{
+			"name": "Figma",
+			"image": "figma.svg",
+			"style": "",
+			"isActive": false
+		},
+		{
 			"name": "YouTube",
 			"image": "youtube.svg",
 			"style": "",

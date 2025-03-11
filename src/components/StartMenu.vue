@@ -60,7 +60,7 @@
 		<div class="search">
 			<div class="search-container">
 				<label for="search">
-					<img src="/images/icons/search.png" width="20" alt="">
+					<img src="/images/start-menu-icons/search.png" width="20" alt="">
 				</label>
 				<input type="text" name="search" value="" placeholder="Search for apps, settings, and documents">
 			</div>
@@ -78,7 +78,7 @@
 					class="app"
 					:key="app.name"
 				>
-					<img :src="'/images/' + app.image" width="auto" height="auto" alt="" />
+					<img :src="'/images/start-menu-apps-and-files/' + app.image" width="auto" height="auto" alt="" />
 					<span>{{ app.name }}</span>
 				</div>
 			</div>
@@ -96,7 +96,7 @@
 					class="item"
 					:key="item.name"
 				>
-					<img :src="'/images/' + item.image" width="auto" height="auto" alt="" />
+					<img :src="'/images/start-menu-apps-and-files/' + item.image" width="auto" height="auto" alt="" />
 					<div class="name-and-description">
 						<span>{{ item.name }}</span>
 						<p>{{ item.description }}</p>
@@ -110,22 +110,22 @@
 				<span>Hùng Vũ</span>
 			</div>
 			<div class="power" @mouseup="togglePowerPopupOpening()">
-				<img src="/images/icons/power.svg" width="18" alt="">
+				<img src="/images/start-menu-icons/power.svg" width="18" alt="">
 				<div class="power-popup" :class="getPowerPopupClass()">
 					<div class="lock" @mouseup="closeThisTab()">
-						<img src="/images/icons/lock.svg" width="16" alt="">
+						<img src="/images/start-menu-icons/lock.svg" width="16" alt="">
 						<span>Lock</span>
 					</div>
 					<div class="sleep" @mouseup="closeThisTab()">
-						<img src="/images/icons/sleep.svg" width="16" alt="">
+						<img src="/images/start-menu-icons/sleep.svg" width="16" alt="">
 						<span>Sleep</span>						
 					</div>
 					<div class="shutdown" @mouseup="closeThisTab()">
-						<img src="/images/icons/power.svg" width="18" alt="">
+						<img src="/images/start-menu-icons/power.svg" width="18" alt="">
 						<span>Shut down</span>						
 					</div>
 					<div class="restart" @mouseup="closeThisTab()">
-						<img src="/images/icons/restart.svg" width="18" alt="">
+						<img src="/images/start-menu-icons/restart.svg" width="18" alt="">
 						<span>Restart</span>					
 					</div>
 				</div>
@@ -381,7 +381,7 @@
 
 			&:hover {
 				background-color: rgba(255, 255, 255, 0.1);
-				box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.1) inset;
+				box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.03) inset;
 			}
 
 			&:active {

@@ -8,7 +8,10 @@
 		data() {
 			return {
 				currentTime: formatAMPM(),
-				currentDate: formatWindowsDate()
+				currentDate: formatWindowsDate(),
+				weatherCelsius: '',
+				weatherDesc: '',
+				weatherPic: ''
 			}
 		},
 		computed: {
@@ -22,12 +25,15 @@
 				return this.getCurrentFocusItem;
 			},
 		},
-		created() {
+		async created() {
 			this.fetchTaskbarItems();
 			setInterval(() => {
 				this.currentTime = formatAMPM();
 				this.currentDate = formatWindowsDate();
 			}, 1000);
+
+			const location = await this.getUserLocation();
+			this.getCurrentWeather(location);
 		},		
 		methods: {
 			...mapActions("taskbar", [
@@ -43,6 +49,31 @@
 				} else if (item.isActive === null && item.name === 'Start') {
 					this.toggleOpening();
 				}
+			},
+			async getUserLocation() {
+				return await fetch('https://ipinfo.io/json?token=' + import.meta.env.VITE_IP_INFO_KEY)
+					.then(response => response.json())
+					.then(data => {
+						return data.city || data.region;
+					})
+					.catch(() => {
+						return 'Hanoi';
+					});  
+			},
+			async getCurrentWeather(city: string) {
+				const lang = navigator.language;
+				await fetch(`https://api.weatherapi.com/v1/current.json?q=${city}&lang=${lang}&key=${import.meta.env.VITE_WEATHER_API_KEY}`)
+					.then(response => response.json())
+					.then(data => {
+						if (data?.current) {
+							this.weatherCelsius = data?.current.windchill_c ? Math.round(data.current.windchill_c) + '°C' : '';
+							this.weatherDesc = data?.current.condition.text;
+							this.weatherPic = data?.current.condition.icon ? 'https:' + data.current.condition.icon : '';
+						}
+					})
+					.catch(error => {
+						console.error(error);
+					});  				
 			}
 		}
 	}
@@ -50,7 +81,15 @@
 
 <template>
   <div class="taskbar-container">
-	<div class="weather-forecast"></div>
+	<div class="weather-forecast">
+		<div class="weather-picture">
+			<img :src="weatherPic">
+		</div>
+		<div class="weather-infor">
+			<span class="celsius">{{ weatherCelsius }}</span>
+			<span class="description" style="color: #cfcfcf;">{{ weatherDesc }}</span>
+		</div>
+	</div>
 	<div class="taskbar-items">
 		<div 
 			v-for="item in taskbarItems" 
@@ -59,7 +98,7 @@
 			:class="{ active: item.isActive, focus: currentFocusItem === item.name }"
 			@mouseup="clickTaskbarItem(item)"
 		>
-			<img :src="'/images/' + item.image" :style="item.style" alt="" />
+			<img :src="'/images/taskbar-apps/' + item.image" :style="item.style" alt="" />
 		</div>
 	</div>
 	<div class="system-tray-and-calendar">
@@ -83,6 +122,47 @@
 		background-color: rgba(0, 0, 0, 0.4);
 		backdrop-filter: blur(20px);
 		z-index: 1;
+
+		.weather-forecast {
+			height: 100%;
+			width: 145px;
+			display: flex;
+			align-items: center;
+			gap: 2px;
+			padding-right: 8px;
+			border-radius: 4px;	
+			transition: background-color ease 0.15s;
+
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+				box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.03) inset;
+			}
+
+			&:active {
+				background-color: rgba(255, 255, 255, 0.075);
+				box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.1) inset;
+			}			
+			
+			.weather-picture {
+				display: flex;
+				align-items: center;
+				gap: 2px;
+
+				img {
+					width: 36px;
+				}
+			}
+
+			.weather-infor {
+				display: flex;
+				flex-direction: column;
+
+				span {
+					color: white;
+					font-size: 12px;
+				}
+			}
+		}
 
 		.taskbar-items {
 			display: flex;
@@ -140,10 +220,11 @@
 				}
 
 				img {
+					max-height: 28px;
 					width: 26px;
 					display: block;
 					padding-bottom: 2px;
-					transition: all ease 0.1s;
+					transition: transform ease 0.15s;
 				}
 
 				&:active {
@@ -161,13 +242,14 @@
 				flex-direction: column;
 				align-items: flex-end;
 				justify-content: center;
-				gap: 4px;
+				gap: 2px;
 				padding: 0 8px;
 				border-radius: 4px;
+				transition: background-color ease 0.15s;
 
 				&:hover {
 					background-color: rgba(255, 255, 255, 0.1);
-					box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.1) inset;
+					box-shadow: 0px 0px 0px 0.5px rgba(255, 255, 255, 0.03) inset;
 				}
 
 				&:active {
