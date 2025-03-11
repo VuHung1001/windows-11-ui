@@ -129,7 +129,7 @@
 			display: flex;
 			align-items: center;
 			gap: 2px;
-			padding-right: 8px;
+			padding: 0 8px 0 2px;
 			border-radius: 4px;	
 			transition: background-color ease 0.15s;
 
