@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { RecommendedFile } from "@/types/startMenuTypes";
 	import { mapGetters, mapActions } from "vuex";
 
 	export default {
@@ -50,6 +51,14 @@
 			closeThisTab() {
 				const acceptClose = window.confirm("Close this tab !?");
 				acceptClose && window.close();
+			},
+			openRecommendedFile(item: RecommendedFile) {
+				if (item.link) {
+					window.open(item.link, '_blank').focus();
+				}
+				if (item.file) {
+					
+				}
 			}
 		}
 	}
@@ -97,7 +106,7 @@
 					:key="item.name"
 				>
 					<img :src="'/images/start-menu-apps-and-files/' + item.image" width="auto" height="auto" alt="" />
-					<div class="name-and-description">
+					<div class="name-and-description" @click="openRecommendedFile(item)">
 						<span>{{ item.name }}</span>
 						<p>{{ item.description }}</p>
 					</div>
@@ -145,17 +154,19 @@
     border-radius: 8px;
     background-color: rgba(74, 84, 89, 0.7);
     backdrop-filter: blur(40px);
-	// box-shadow: 0px 0px 1px 1.25px rgba(255, 255, 255, 0.15) inset;
+	// box-shadow: 0px 0px 1px 1.25px rgba(255, 255, 255, 0.05) inset;
 	box-shadow: 0px 6px 10px 2px rgba(0,0,0,0.3);
-	border: 1px solid rgba(255, 255, 255, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.05);
 
 	opacity: 0;
-	transform: translateX(-50%) translateY(calc(100% + 60px));
+	will-change: transform, opacity;
+	backface-visibility: hidden;
+	transform: translateZ(0) translateX(-50%) translateY(calc(100% + 60px));
 
 	&.opening {
 		animation: show_up ease 0.3s;
 		opacity: 1;
-		transform: translateX(-50%) translateY(0);		
+		transform: translateZ(0) translateX(-50%) translateY(0);		
 
 		* {
 			animation: show ease 0.3s;
@@ -165,7 +176,7 @@
 	&.closed {
 		animation: hide_down ease 0.3s;
 		opacity: 0;
-		transform: translateX(-50%) translateY(calc(100% + 60px));		
+		transform: translateZ(0) translateX(-50%) translateY(calc(100% + 60px));		
 		
 		* {
 			animation: hide ease 0.3s;
@@ -175,22 +186,22 @@
 	@keyframes show_up {
 		0% {
 			opacity: 0;
-			transform: translateX(-50%) translateY(calc(100% + 60px));	
+			transform: translateZ(0) translateX(-50%) translateY(calc(100% + 60px));	
 		}
 		100% {
 			opacity: 1;
-			transform: translateX(-50%) translateY(0);				
+			transform: translateZ(0) translateX(-50%) translateY(0);				
 		}
 	}
 
 	@keyframes hide_down {
 		0% {
 			opacity: 1;
-			transform: translateX(-50%) translateY(0);				
+			transform: translateZ(0) translateX(-50%) translateY(0);				
 		}
 		100% {
 			opacity: 0;
-			transform: translateX(-50%) translateY(calc(100% + 60px));				
+			transform: translateZ(0) translateX(-50%) translateY(calc(100% + 60px));				
 		}
 	}
 
@@ -280,6 +291,7 @@
 					max-width: 32px;
 					max-height: 32px;
 					min-height: 32px;
+					will-change: transform;
 					transition: all ease 0.15s;
 				}
 
@@ -336,7 +348,7 @@
 					width: calc(100% - 32px - 12px);
 					display: flex;
 					flex-direction: column;
-					gap: 2px;
+					gap: 4px;
 
 					span {
 						overflow:hidden; 

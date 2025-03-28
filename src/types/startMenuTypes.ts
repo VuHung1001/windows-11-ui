@@ -1,9 +1,9 @@
-type PinnedApps = {
+type PinnedApp = {
 	name: string, image: string
 }
 
-type RecommendedFiles = {
-	name: string, image: string, description: string, link?: string
+type RecommendedFile = {
+	name: string, image: string, description: string, link?: string, file?: string
 }
 
-export {PinnedApps, RecommendedFiles}
+export {PinnedApp, RecommendedFile}

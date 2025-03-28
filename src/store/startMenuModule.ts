@@ -1,9 +1,9 @@
-import { PinnedApps, RecommendedFiles } from '@/types/startMenuTypes';
+import { PinnedApp, RecommendedFile } from '@/types/startMenuTypes';
 import { Module } from 'vuex';
 
 interface StartMenuState {
-	pinnedApps: PinnedApps[],
-    recommendedFiles: RecommendedFiles[],
+	pinnedApps: PinnedApp[],
+    recommendedFiles: RecommendedFile[],
     isOpen: boolean | null,
     isPowerPopupOpen: boolean | null
 }
@@ -11,8 +11,8 @@ interface StartMenuState {
 const startMenuModule: Module<StartMenuState, any> = {
 	namespaced: true,
     state: {
-        pinnedApps: [] as PinnedApps[],
-        recommendedFiles: [] as RecommendedFiles[],
+        pinnedApps: [] as PinnedApp[],
+        recommendedFiles: [] as RecommendedFile[],
         isOpen: null,
         isPowerPopupOpen: null
     },

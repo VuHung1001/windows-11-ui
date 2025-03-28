@@ -66,7 +66,7 @@
 					.then(response => response.json())
 					.then(data => {
 						if (data?.current) {
-							this.weatherCelsius = data?.current.windchill_c ? Math.round(data.current.windchill_c) + '°C' : '';
+							this.weatherCelsius = data?.current.temp_c ? Math.round(data.current.temp_c) + '°C' : '';
 							this.weatherDesc = data?.current.condition.text;
 							this.weatherPic = data?.current.condition.icon ? 'https:' + data.current.condition.icon : '';
 						}
@@ -139,7 +139,7 @@
 			}
 
 			&:active {
-				background-color: rgba(255, 255, 255, 0.075);
+				background-color: rgba(255, 255, 255, 0.05);
 				box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.1) inset;
 			}			
 			
@@ -156,6 +156,7 @@
 			.weather-infor {
 				display: flex;
 				flex-direction: column;
+				gap: 4px;
 
 				span {
 					color: white;
@@ -206,11 +207,11 @@
 
 				&.focus {
 					background-color: rgba(255, 255, 255, 0.1);
-					box-shadow: 0px 0px 0px 0.25px rgba(255, 255, 255, 0.15) inset;
+					box-shadow: 0px 0px 0px 0.25px rgba(255, 255, 255, 0.05) inset;
 
 					&:hover {
 						background-color: rgba(255, 255, 255, 0.15);
-						box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.15) inset;
+						box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0.05) inset;
 					}
 
 					&::before {
@@ -224,6 +225,7 @@
 					width: 26px;
 					display: block;
 					padding-bottom: 2px;
+					will-change: transform;
 					transition: transform ease 0.15s;
 				}
 
@@ -242,7 +244,7 @@
 				flex-direction: column;
 				align-items: flex-end;
 				justify-content: center;
-				gap: 2px;
+				gap: 4px;
 				padding: 0 8px;
 				border-radius: 4px;
 				transition: background-color ease 0.15s;

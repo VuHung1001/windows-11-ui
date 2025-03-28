@@ -9,7 +9,8 @@
 		{
 			"name": "about-me.md",
 			"image": "markdown.svg",
-			"description": "A few things about me"
+			"description": "A few things about me",
+			"file": "about-me.md"
 		},	
 		{
 			"name": "CV Vũ Phi Hùng - Frontend Developer.pdf",
